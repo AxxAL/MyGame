@@ -12,6 +12,7 @@ namespace MyGame
         public SpriteBatch spriteBatch;
         public EnemyManager EnemyManager;
         public Player player;
+        public HUD hud;
         
         
         public GameRoot()
@@ -29,6 +30,7 @@ namespace MyGame
         {
             this.player = new Player(this);
             this.EnemyManager = new EnemyManager(this);
+            this.hud = new HUD(this);
             base.Initialize();
         }
 
@@ -47,6 +49,7 @@ namespace MyGame
 
             this.player.Update(gameTime, kState);
             this.EnemyManager.Update(gameTime);
+            this.hud.Update(gameTime);
 
             base.Update(gameTime);
         }
@@ -58,6 +61,7 @@ namespace MyGame
 
             this.player.Draw();
             this.EnemyManager.Draw();
+            this.hud.Draw();
 
             this.spriteBatch.End();
             base.Draw(gameTime);
