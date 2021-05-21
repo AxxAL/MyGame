@@ -9,15 +9,15 @@ namespace MyGame
     public class GameRoot : Game
     {
         private Song music;
+        private HUD hud;
+        private Menu menu;
+        private HealthPackManager HealthPackManager;
         public GraphicsDeviceManager graphics;
         public ContentManager content;
         public SpriteBatch spriteBatch;
         public EnemyManager EnemyManager;
-        public HealthPackManager HealthPackManager;
         public Player player;
-        public HUD hud;
-        
-        
+
         public GameRoot()
         {
             graphics = new GraphicsDeviceManager(this);
@@ -35,6 +35,7 @@ namespace MyGame
             this.EnemyManager = new EnemyManager(this);
             this.hud = new HUD(this);
             this.HealthPackManager = new HealthPackManager(this);
+            this.menu = new Menu(this);
             this.Music();
             base.Initialize();
         }
@@ -48,24 +49,44 @@ namespace MyGame
         {
             KeyboardState kState = Keyboard.GetState();
 
-            this.player.Update(gameTime, kState);
-            this.EnemyManager.Update(gameTime);
-            this.hud.Update(gameTime);
-            this.HealthPackManager.Update(gameTime);
-
+            if (this.menu.isMenuActive)
+            {
+                this.menu.Update(gameTime);
+            }
+            
+            if (!this.menu.isMenuActive)
+            {
+                if (kState.IsKeyDown(Keys.Escape))
+                {
+                    this.menu.isMenuActive = true;
+                }
+                this.player.Update(gameTime, kState);
+                this.EnemyManager.Update(gameTime);
+                this.hud.Update(gameTime);
+                this.HealthPackManager.Update(gameTime);
+            }
+            
             base.Update(gameTime);
         }
 
         protected override void Draw(GameTime gameTime)
         {
-            GraphicsDevice.Clear(new Color(69, 34, 86));
             this.spriteBatch.Begin();
 
-            this.player.Draw();
-            this.EnemyManager.Draw();
-            this.hud.Draw();
-            this.HealthPackManager.Draw();
+            if (this.menu.isMenuActive)
+            {
+                this.menu.Draw();
+            }
 
+            if (!this.menu.isMenuActive)
+            {
+                GraphicsDevice.Clear(new Color(69, 34, 86));
+                this.player.Draw();
+                this.EnemyManager.Draw();
+                this.hud.Draw();
+                this.HealthPackManager.Draw();
+            }
+            
             this.spriteBatch.End();
             base.Draw(gameTime);
         }
