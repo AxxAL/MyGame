@@ -4,15 +4,18 @@ using Microsoft.Xna.Framework;
 
 namespace MyGame
 {
-    public class EnemyManager : List<Impostor>
+    public class EnemyManager : List<RedEnemy>
     {
+        public float movementSpeed;
+        private Boss bossEnemy;
+        private bool bossActive;
+        public int fragsUntilBoss;
         private Random randUtil;
         private GameRoot game;
         private int enemyCap;
         private int spawnDelay;
         private double lastSpawned;
-        public float movementSpeed;
-        
+
         public EnemyManager(GameRoot game)
         {
             this.game = game;
@@ -20,6 +23,8 @@ namespace MyGame
             this.enemyCap = 25;
             this.spawnDelay = 1000;
             this.movementSpeed = 80.0f;
+            this.fragsUntilBoss = 25;
+            this.bossActive = false;
         }
 
         public void Update(GameTime gTime)
@@ -41,6 +46,17 @@ namespace MyGame
             {
                 this[i].Update(gTime);
             }
+
+            if (this.fragsUntilBoss <= 0)
+            {
+                this.SpawnBoss();
+                this.fragsUntilBoss = 25;
+            }
+
+            if (this.bossEnemy != null)
+            {
+                this.bossEnemy.Update(gTime);
+            }
             
             this.DifficultyIncrement(gTime);
         }
@@ -51,15 +67,25 @@ namespace MyGame
             {
                 this[i].Draw();
             }
+
+            if (this.bossEnemy != null)
+            {
+                this.bossEnemy.Draw();
+            }
         }
         
         private void CreateEnemy(GameTime gTime)
         {
             if (gTime.TotalGameTime.TotalMilliseconds > this.lastSpawned + this.spawnDelay)
             {
-                this.Add(new Impostor(this.RandomPosition(), this.game));
+                this.Add(new RedEnemy(this.game, this.RandomPosition()));
                 this.lastSpawned = gTime.TotalGameTime.TotalMilliseconds;
             }
+        }
+
+        public void SpawnBoss()
+        {
+            this.bossEnemy = new Boss(new Vector2(600, 400), this.game);
         }
 
         private double lastSpeedIncrement;

@@ -56,7 +56,7 @@ namespace MyGame
         private void Hit()
         {
             List<Projectile> newProjectileList = new List<Projectile>(this.game.player.projectileManager);
-            List<Impostor> newEnemyList = new List<Impostor>(this.game.EnemyManager);
+            List<RedEnemy> newEnemyList = new List<RedEnemy>(this.game.EnemyManager);
 
             foreach (var firebolt in this)
             {
@@ -67,6 +67,7 @@ namespace MyGame
                         newEnemyList.Remove(enemy);
                         newProjectileList.Remove(firebolt);
                         this.caster.frags++;
+                        this.game.EnemyManager.fragsUntilBoss--;
                     }
                 }
             }
@@ -75,12 +76,6 @@ namespace MyGame
             this.game.EnemyManager.Clear();
             this.game.player.projectileManager.AddRange(newProjectileList);
             this.game.EnemyManager.AddRange(newEnemyList);
-        }
-
-
-        public void SetCastDelay(int newDelay)
-        {
-            this.castDelay = newDelay;
         }
     }
 }
