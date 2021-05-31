@@ -7,8 +7,7 @@ namespace MyGame
     public class EnemyManager : List<RedEnemy>
     {
         public float movementSpeed;
-        private Boss bossEnemy;
-        private bool bossActive;
+        public Boss bossEnemy;
         public int fragsUntilBoss;
         private Random randUtil;
         private GameRoot game;
@@ -23,11 +22,10 @@ namespace MyGame
             this.enemyCap = 25;
             this.spawnDelay = 1000;
             this.movementSpeed = 80.0f;
-            this.fragsUntilBoss = 25;
-            this.bossActive = false;
+            this.fragsUntilBoss = 1;
         }
 
-        public void Update(GameTime gTime)
+        public void Update(GameTime gameTime)
         {
             for (int i = 0; i < this.Count; i++)
             {
@@ -39,26 +37,22 @@ namespace MyGame
 
             if (this.Count < this.enemyCap)
             {
-                this.CreateEnemy(gTime);
+                this.CreateEnemy(gameTime);
             }
             
             for (int i = 0; i < this.Count; i++)
             {
-                this[i].Update(gTime);
-            }
-
-            if (this.fragsUntilBoss <= 0)
-            {
-                this.SpawnBoss();
-                this.fragsUntilBoss = 25;
+                this[i].Update(gameTime);
             }
 
             if (this.bossEnemy != null)
             {
-                this.bossEnemy.Update(gTime);
+                this.bossEnemy.Update(gameTime);
             }
+
+            this.BossManager(gameTime);
             
-            this.DifficultyIncrement(gTime);
+            this.DifficultyIncrement(gameTime);
         }
 
         public void Draw()
@@ -74,18 +68,37 @@ namespace MyGame
             }
         }
         
-        private void CreateEnemy(GameTime gTime)
+        private void CreateEnemy(GameTime gameTime)
         {
-            if (gTime.TotalGameTime.TotalMilliseconds > this.lastSpawned + this.spawnDelay)
+            if (gameTime.TotalGameTime.TotalMilliseconds > this.lastSpawned + this.spawnDelay)
             {
                 this.Add(new RedEnemy(this.game, this.RandomPosition()));
-                this.lastSpawned = gTime.TotalGameTime.TotalMilliseconds;
+                this.lastSpawned = gameTime.TotalGameTime.TotalMilliseconds;
             }
         }
 
-        public void SpawnBoss()
+        private void SpawnBoss()
         {
-            this.bossEnemy = new Boss(new Vector2(600, 400), this.game);
+            this.bossEnemy = new Boss(new Vector2(800, 400), this.game);
+        }
+
+        private void BossManager(GameTime gameTime)
+        {
+            if (this.fragsUntilBoss <= 0)
+            {
+                this.SpawnBoss();
+                this.fragsUntilBoss = 25;
+            }
+
+            if (this.bossEnemy == null)
+            {
+                return;
+            }
+            
+            if (this.bossEnemy.healthPoints <= 0)
+            {
+                this.bossEnemy = null;
+            }
         }
 
         private double lastSpeedIncrement;

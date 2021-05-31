@@ -123,7 +123,7 @@ namespace MyGame
                 this.position.Y += this.speed * deltaTime;
             }
 
-        } // Moves the ship object
+        } // Moves the player object
 
         private void BackFall(GameTime gTime, KeyboardState kState)
         {
@@ -134,6 +134,6 @@ namespace MyGame
                 return;
             }
             this.position.X -= backFallSpeed * deltaTime;
-        } // Pushes the ship back while it's idle
+        } // Pushes the player back while they're idle
     }
 }

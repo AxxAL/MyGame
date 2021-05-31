@@ -35,7 +35,7 @@ namespace MyGame
 
         private void BossMovement(GameTime gameTime)
         {
-            float deltaTime = (float) gameTime.TotalGameTime.TotalMilliseconds;
+            float deltaTime = (float) gameTime.ElapsedGameTime.TotalSeconds;
             this.position.X -= this.movementSpeed * deltaTime;
         }
     }
