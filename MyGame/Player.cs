@@ -62,7 +62,7 @@ namespace MyGame
                     this.currentTexture = this.textures[2];
                     break;
                 default:
-                    System.Environment.Exit(0);
+                    this.game.ResetGame();
                     break;
             }
             

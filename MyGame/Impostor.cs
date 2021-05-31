@@ -8,17 +8,18 @@ namespace MyGame
         public Texture2D texture;
         public Vector2 position;
         public Rectangle hitbox;
+        public float backfallSpeed;
         private GameRoot game;
-        private float backfallSpeed;
         
         public Impostor(Vector2 position, GameRoot game)
         {
             this.game = game;
             this.texture = this.game.content.Load<Texture2D>("sprites/enemies/among-us-red");
             this.position = position;
-            this.backfallSpeed = 80.0f;
+            this.backfallSpeed = this.game.EnemyManager.movementSpeed;
         }
 
+        private double lastIncrement;
         public void Update(GameTime gTime)
         {
             this.hitbox = new Rectangle((int) this.position.X, (int) this.position.Y, this.texture.Width, this.texture.Height);

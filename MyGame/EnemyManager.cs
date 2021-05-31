@@ -11,6 +11,7 @@ namespace MyGame
         private int enemyCap;
         private int spawnDelay;
         private double lastSpawned;
+        public float movementSpeed;
         
         public EnemyManager(GameRoot game)
         {
@@ -18,6 +19,7 @@ namespace MyGame
             this.randUtil = new Random();
             this.enemyCap = 25;
             this.spawnDelay = 1000;
+            this.movementSpeed = 80.0f;
         }
 
         public void Update(GameTime gTime)
@@ -39,6 +41,8 @@ namespace MyGame
             {
                 this[i].Update(gTime);
             }
+            
+            this.DifficultyIncrement(gTime);
         }
 
         public void Draw()
@@ -54,7 +58,20 @@ namespace MyGame
             if (gTime.TotalGameTime.TotalMilliseconds > this.lastSpawned + this.spawnDelay)
             {
                 this.Add(new Impostor(this.RandomPosition(), this.game));
-                lastSpawned = gTime.TotalGameTime.TotalMilliseconds;
+                this.lastSpawned = gTime.TotalGameTime.TotalMilliseconds;
+            }
+        }
+
+        private double lastSpeedIncrement;
+        private void DifficultyIncrement(GameTime gameTime)
+        {
+            if (gameTime.TotalGameTime.TotalMilliseconds > this.lastSpeedIncrement + 1000)
+            {
+                this.movementSpeed += 5.0f;
+                this.enemyCap++;
+                if (this.spawnDelay > 0)
+                    this.spawnDelay -= 10;
+                this.lastSpeedIncrement = gameTime.TotalGameTime.TotalMilliseconds;
             }
         }
 

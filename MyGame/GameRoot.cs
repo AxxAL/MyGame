@@ -10,7 +10,7 @@ namespace MyGame
     {
         private Song music;
         private HUD hud;
-        private Menu menu;
+        public Menu menu;
         private HealthPackManager HealthPackManager;
         public GraphicsDeviceManager graphics;
         public ContentManager content;
@@ -96,6 +96,15 @@ namespace MyGame
             this.music = this.content.Load<Song>("sprites/Shadilay");
             MediaPlayer.IsRepeating = true;
             MediaPlayer.Volume = 0.2f;
+            MediaPlayer.Play(this.music);
+        }
+
+        public void ResetGame()
+        {
+            this.menu.isMenuActive = true;
+            this.player = new Player(this);
+            this.EnemyManager = new EnemyManager(this);
+            this.hud = new HUD(this);
             MediaPlayer.Play(this.music);
         }
     }
