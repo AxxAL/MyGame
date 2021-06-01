@@ -79,7 +79,10 @@ namespace MyGame
 
         private void SpawnBoss()
         {
-            this.bossEnemy = new Boss(new Vector2(800, 400), this.game);
+            if (this.bossEnemy == null)
+            {
+                this.bossEnemy = new Boss(new Vector2(800, 400), this.game);
+            }
         }
 
         private void BossManager(GameTime gameTime)

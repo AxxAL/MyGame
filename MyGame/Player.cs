@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
@@ -66,16 +67,16 @@ namespace MyGame
                     break;
             }
             
-            for (int i = 0; i < this.game.EnemyManager.Count; i++)
+            for (int i = 0; i < this.game.enemyManager.Count; i++)
             {
-                if (this.hitbox.Intersects(this.game.EnemyManager[i].hitbox))
+                if (this.hitbox.Intersects(this.game.enemyManager[i].hitbox))
                 {
                     this.health--;
-                    this.game.EnemyManager.Remove(this.game.EnemyManager[i]);
+                    this.game.enemyManager.Remove(this.game.enemyManager[i]);
                 }
             }
 
-            if (this.game.EnemyManager.bossEnemy != null && this.hitbox.Intersects(this.game.EnemyManager.bossEnemy.hitbox))
+            if (this.game.enemyManager.bossEnemy != null && this.hitbox.Intersects(this.game.enemyManager.bossEnemy.hitbox))
             {
                 this.health = 0;
             }

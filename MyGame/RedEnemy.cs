@@ -28,7 +28,7 @@ namespace MyGame
 
         protected override void Movement(GameTime gameTime)
         {
-            float movementSpeed = this.game.EnemyManager.movementSpeed;
+            float movementSpeed = this.game.enemyManager.movementSpeed;
             float deltaTime = (float) gameTime.ElapsedGameTime.TotalSeconds;
             this.position.X -= movementSpeed * deltaTime;
         }

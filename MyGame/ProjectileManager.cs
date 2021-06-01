@@ -56,19 +56,19 @@ namespace MyGame
         private void Hit()
         {
             List<Projectile> newProjectileList = new List<Projectile>(this.game.player.projectileManager);
-            List<RedEnemy> newEnemyList = new List<RedEnemy>(this.game.EnemyManager);
-            Boss boss = this.game.EnemyManager.bossEnemy;
+            List<RedEnemy> newEnemyList = new List<RedEnemy>(this.game.enemyManager);
+            Boss boss = this.game.enemyManager.bossEnemy;
             
             foreach (var firebolt in this)
             {
-                foreach (var enemy in this.game.EnemyManager)
+                foreach (var enemy in this.game.enemyManager)
                 {
                     if (firebolt.hitbox.Intersects(enemy.hitbox))
                     {
                         newEnemyList.Remove(enemy);
                         newProjectileList.Remove(firebolt);
                         this.caster.frags++;
-                        this.game.EnemyManager.fragsUntilBoss--;
+                        this.game.enemyManager.fragsUntilBoss--;
                     }
                 }
 
@@ -83,9 +83,9 @@ namespace MyGame
             }
 
             this.game.player.projectileManager.Clear();
-            this.game.EnemyManager.Clear();
+            this.game.enemyManager.Clear();
             this.game.player.projectileManager.AddRange(newProjectileList);
-            this.game.EnemyManager.AddRange(newEnemyList);
+            this.game.enemyManager.AddRange(newEnemyList);
         }
     }
 }

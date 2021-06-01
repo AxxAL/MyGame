@@ -10,12 +10,13 @@ namespace MyGame
     {
         private Song music;
         private HUD hud;
-        public Menu menu;
-        private HealthPackManager HealthPackManager;
+        private Menu menu;
+        private HealthPackManager healthPackManager;
+        private StarManager starManager;
         public GraphicsDeviceManager graphics;
         public ContentManager content;
         public SpriteBatch spriteBatch;
-        public EnemyManager EnemyManager;
+        public EnemyManager enemyManager;
         public Player player;
 
         public GameRoot()
@@ -32,10 +33,11 @@ namespace MyGame
         protected override void Initialize()
         {
             this.player = new Player(this);
-            this.EnemyManager = new EnemyManager(this);
+            this.enemyManager = new EnemyManager(this);
             this.hud = new HUD(this);
-            this.HealthPackManager = new HealthPackManager(this);
+            this.healthPackManager = new HealthPackManager(this);
             this.menu = new Menu(this);
+            this.starManager = new StarManager(this);
             this.Music();
             base.Initialize();
         }
@@ -60,10 +62,12 @@ namespace MyGame
                 {
                     this.menu.isMenuActive = true;
                 }
+                
+                this.starManager.Update(gameTime);
                 this.player.Update(gameTime, kState);
-                this.EnemyManager.Update(gameTime);
+                this.enemyManager.Update(gameTime);
                 this.hud.Update(gameTime);
-                this.HealthPackManager.Update(gameTime);
+                this.healthPackManager.Update(gameTime);
             }
             
             base.Update(gameTime);
@@ -80,11 +84,12 @@ namespace MyGame
 
             if (!this.menu.isMenuActive)
             {
-                GraphicsDevice.Clear(new Color(69, 34, 86));
+                GraphicsDevice.Clear(new Color(0, 0, 5));
+                this.starManager.Draw();
+                this.healthPackManager.Draw();
                 this.player.Draw();
-                this.EnemyManager.Draw();
+                this.enemyManager.Draw();
                 this.hud.Draw();
-                this.HealthPackManager.Draw();
             }
             
             this.spriteBatch.End();
@@ -103,7 +108,7 @@ namespace MyGame
         {
             this.menu.isMenuActive = true;
             this.player = new Player(this);
-            this.EnemyManager = new EnemyManager(this);
+            this.enemyManager = new EnemyManager(this);
             this.hud = new HUD(this);
             MediaPlayer.Play(this.music);
         }
