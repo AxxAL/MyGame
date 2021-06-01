@@ -25,9 +25,10 @@ namespace MyGame
             
             this.buttonPos = new Vector2[]
             {
-                new Vector2(100, 100),
-                new Vector2(100, 220)
+                new Vector2(480, 300),
+                new Vector2(480, 420)
             };
+            
             this.buttonHitbox = new Rectangle[]
             {
                 new Rectangle((int) this.buttonPos[0].X,(int) this.buttonPos[0].Y, this.button.Width, this.button.Height),
@@ -35,33 +36,40 @@ namespace MyGame
             };
         }
 
-        public void Update(GameTime gameTime)
+        public void Update(GameTime gameTime, KeyboardState keyboardState)
         {
             this.mouseState = Mouse.GetState();
             this.mouseHitbox = new Rectangle(this.mouseHitbox.X, this.mouseState.Y, 10, 10);
 
+            if (keyboardState.IsKeyDown(Keys.Escape))
+            {
+                this.isMenuActive = true;
+            }
+            
             if (this.mouseState.X > this.buttonPos[0].X && this.mouseState.X < this.buttonPos[0].X + this.button.Width && this.mouseState.Y > this.buttonPos[0].Y 
                 && this.mouseState.Y < this.buttonPos[0].Y + this.button.Height && mouseState.LeftButton == ButtonState.Pressed)
             {
                 this.isMenuActive = false;
-                Debug.WriteLine("PLAYING GAME");
             }
 
             if (this.mouseState.X > this.buttonPos[1].X && this.mouseState.X < this.buttonPos[1].X + this.button.Width && this.mouseState.Y > this.buttonPos[1].Y 
                 && this.mouseState.Y < this.buttonPos[1].Y + this.button.Height && mouseState.LeftButton == ButtonState.Pressed)
             {
-                game.Exit();
+                this.game.Exit();
             }
         }
 
         public void Draw()
         {
-            this.game.GraphicsDevice.Clear(new Color(0, 86, 86));
-            this.game.spriteBatch.Draw(this.button, this.buttonHitbox[0], Color.White);
-            this.game.spriteBatch.Draw(this.button, this.buttonHitbox[1], Color.White);
+            if (this.isMenuActive)
+            {
+                this.game.GraphicsDevice.Clear(new Color(0, 86, 86));
+                this.game.spriteBatch.Draw(this.button, this.buttonHitbox[0], Color.White);
+                this.game.spriteBatch.Draw(this.button, this.buttonHitbox[1], Color.White);
             
-            this.game.spriteBatch.DrawString(this.font, "Play", new Vector2(this.buttonPos[0].X + 80, this.buttonPos[0].Y + 40), Color.Black);
-            this.game.spriteBatch.DrawString(this.font, "Exit", new Vector2(this.buttonPos[1].X + 80, this.buttonPos[1].Y + 40), Color.Black);
+                this.game.spriteBatch.DrawString(this.font, "Play", new Vector2(this.buttonPos[0].X + 80, this.buttonPos[0].Y + 40), Color.Black);
+                this.game.spriteBatch.DrawString(this.font, "Exit", new Vector2(this.buttonPos[1].X + 80, this.buttonPos[1].Y + 40), Color.Black);
+            }
         }
     }
 }

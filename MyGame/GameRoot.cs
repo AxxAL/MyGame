@@ -49,26 +49,16 @@ namespace MyGame
 
         protected override void Update(GameTime gameTime)
         {
-            KeyboardState kState = Keyboard.GetState();
-
-            if (this.menu.isMenuActive)
-            {
-                this.menu.Update(gameTime);
-            }
+            KeyboardState keyboardState = Keyboard.GetState();
             
-            if (!this.menu.isMenuActive)
-            {
-                if (kState.IsKeyDown(Keys.Escape))
-                {
-                    this.menu.isMenuActive = true;
-                }
-                
-                this.starManager.Update(gameTime);
-                this.player.Update(gameTime, kState);
-                this.enemyManager.Update(gameTime);
-                this.hud.Update(gameTime);
-                this.healthPackManager.Update(gameTime);
-            }
+            this.menu.Update(gameTime, keyboardState);
+            
+            if (!this.menu.isMenuActive) return;
+            this.starManager.Update(gameTime);
+            this.player.Update(gameTime, keyboardState);
+            this.enemyManager.Update(gameTime);
+            this.hud.Update(gameTime);
+            this.healthPackManager.Update(gameTime);
             
             base.Update(gameTime);
         }
@@ -76,11 +66,7 @@ namespace MyGame
         protected override void Draw(GameTime gameTime)
         {
             this.spriteBatch.Begin();
-
-            if (this.menu.isMenuActive)
-            {
-                this.menu.Draw();
-            }
+            this.menu.Draw();
 
             if (!this.menu.isMenuActive)
             {
@@ -100,7 +86,7 @@ namespace MyGame
         {
             this.music = this.content.Load<Song>("sprites/Shadilay");
             MediaPlayer.IsRepeating = true;
-            MediaPlayer.Volume = 0.2f;
+            MediaPlayer.Volume = 0.1f;
             MediaPlayer.Play(this.music);
         }
 
