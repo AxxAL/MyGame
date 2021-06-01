@@ -74,6 +74,11 @@ namespace MyGame
                     this.game.EnemyManager.Remove(this.game.EnemyManager[i]);
                 }
             }
+
+            if (this.game.EnemyManager.bossEnemy != null && this.hitbox.Intersects(this.game.EnemyManager.bossEnemy.hitbox))
+            {
+                this.health = 0;
+            }
         } // Loops through the enemy manager and checks if the player collides with an enemy.
 
         private void Boundaries()

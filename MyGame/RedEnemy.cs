@@ -25,5 +25,12 @@ namespace MyGame
         {
             this.game.spriteBatch.Draw(this.texture, this.hitbox, Color.White);
         }
+
+        protected override void Movement(GameTime gameTime)
+        {
+            float movementSpeed = this.game.EnemyManager.movementSpeed;
+            float deltaTime = (float) gameTime.ElapsedGameTime.TotalSeconds;
+            this.position.X -= movementSpeed * deltaTime;
+        }
     }
 }

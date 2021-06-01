@@ -22,7 +22,7 @@ namespace MyGame
             this.enemyCap = 25;
             this.spawnDelay = 1000;
             this.movementSpeed = 80.0f;
-            this.fragsUntilBoss = 1;
+            this.fragsUntilBoss = 25;
         }
 
         public void Update(GameTime gameTime)

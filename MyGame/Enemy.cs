@@ -18,12 +18,6 @@ namespace MyGame
 
         public abstract void Update(GameTime gameTime);
         public abstract void Draw();
-
-        protected void Movement(GameTime gameTime)
-        {
-            float movementSpeed = this.game.EnemyManager.movementSpeed;
-            float deltaTime = (float) gameTime.ElapsedGameTime.TotalSeconds;
-            this.position.X -= movementSpeed * deltaTime;
-        }
+        protected abstract void Movement(GameTime gameTime);
     }
 }
