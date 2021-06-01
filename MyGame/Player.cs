@@ -74,6 +74,11 @@ namespace MyGame
                     this.game.EnemyManager.Remove(this.game.EnemyManager[i]);
                 }
             }
+
+            if (this.game.EnemyManager.bossEnemy != null && this.hitbox.Intersects(this.game.EnemyManager.bossEnemy.hitbox))
+            {
+                this.health = 0;
+            }
         } // Loops through the enemy manager and checks if the player collides with an enemy.
 
         private void Boundaries()
@@ -123,7 +128,7 @@ namespace MyGame
                 this.position.Y += this.speed * deltaTime;
             }
 
-        } // Moves the ship object
+        } // Moves the player object
 
         private void BackFall(GameTime gTime, KeyboardState kState)
         {
@@ -134,6 +139,6 @@ namespace MyGame
                 return;
             }
             this.position.X -= backFallSpeed * deltaTime;
-        } // Pushes the ship back while it's idle
+        } // Pushes the player back while they're idle
     }
 }

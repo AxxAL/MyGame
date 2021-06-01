@@ -43,7 +43,7 @@ namespace MyGame
             KeyboardState keyboardState = Keyboard.GetState();
             if (!keyboardState.IsKeyDown(Keys.Space)) 
             {
-                return; 
+                return;
             } // Checks if player is pressing spacebar.
             
             if (gameTime.TotalGameTime.TotalMilliseconds > this.lastCast + this.castDelay)
@@ -57,7 +57,8 @@ namespace MyGame
         {
             List<Projectile> newProjectileList = new List<Projectile>(this.game.player.projectileManager);
             List<RedEnemy> newEnemyList = new List<RedEnemy>(this.game.EnemyManager);
-
+            Boss boss = this.game.EnemyManager.bossEnemy;
+            
             foreach (var firebolt in this)
             {
                 foreach (var enemy in this.game.EnemyManager)
@@ -68,6 +69,15 @@ namespace MyGame
                         newProjectileList.Remove(firebolt);
                         this.caster.frags++;
                         this.game.EnemyManager.fragsUntilBoss--;
+                    }
+                }
+
+                if (boss != null)
+                {
+                    if (firebolt.hitbox.Intersects(boss.hitbox))
+                    {
+                        newProjectileList.Remove(firebolt);
+                        boss.healthPoints -= 10;
                     }
                 }
             }
