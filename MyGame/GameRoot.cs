@@ -3,6 +3,8 @@ using Microsoft.Xna.Framework.Content;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
 using Microsoft.Xna.Framework.Media;
+using MyGame.GameObjects;
+using MyGame.Managers;
 
 namespace MyGame 
 {
@@ -23,9 +25,9 @@ namespace MyGame
         {
             graphics = new GraphicsDeviceManager(this);
             Content.RootDirectory = "Content";
-            content = Content;
+            this.content = Content;
             IsMouseVisible = true;
-            Window.Title = "KILL THE IMPOSTOR!";
+            Window.Title = "You know what to do.";
             graphics.PreferredBackBufferHeight = 800;
             graphics.PreferredBackBufferWidth = 1200;
         }

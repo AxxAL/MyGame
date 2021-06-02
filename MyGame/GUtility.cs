@@ -1,4 +1,6 @@
 ﻿
+using MyGame.GameObjects;
+
 namespace MyGame
 {
     public static class GUtility

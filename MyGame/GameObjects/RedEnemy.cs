@@ -1,7 +1,7 @@
 ﻿using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 
-namespace MyGame
+namespace MyGame.GameObjects
 {
     public class RedEnemy : Enemy
     {

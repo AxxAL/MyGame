@@ -1,8 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
 using Microsoft.Xna.Framework;
+using MyGame.GameObjects;
 
-namespace MyGame
+namespace MyGame.Managers
 {
     public class EnemyManager : List<Enemy>
     {

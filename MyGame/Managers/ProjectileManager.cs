@@ -1,9 +1,10 @@
 ﻿using System.Collections.Generic;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Input;
+using MyGame.GameObjects;
 using Keys = Microsoft.Xna.Framework.Input.Keys;
 
-namespace MyGame
+namespace MyGame.Managers
 {
     public class ProjectileManager : List<Projectile>
     {

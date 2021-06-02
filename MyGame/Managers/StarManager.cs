@@ -1,9 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Diagnostics;
 using Microsoft.Xna.Framework;
+using MyGame.GameObjects;
 
-namespace MyGame
+namespace MyGame.Managers
 {
     public class StarManager : List<Star>
     {
