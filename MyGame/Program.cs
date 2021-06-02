@@ -8,7 +8,9 @@ namespace MyGame
         static void Main() 
         {
             using (var game = new GameRoot())
+            {
                 game.Run(); 
+            }
         }
     }
 }
