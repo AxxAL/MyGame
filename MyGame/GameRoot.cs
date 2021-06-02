@@ -53,13 +53,15 @@ namespace MyGame
             
             this.menu.Update(gameTime, keyboardState);
             
-            if (!this.menu.isMenuActive) return;
-            this.starManager.Update(gameTime);
-            this.player.Update(gameTime, keyboardState);
-            this.enemyManager.Update(gameTime);
-            this.hud.Update(gameTime);
-            this.healthPackManager.Update(gameTime);
-            
+            if (!this.menu.isMenuActive)
+            {
+                this.starManager.Update(gameTime);
+                this.player.Update(gameTime, keyboardState);
+                this.enemyManager.Update(gameTime);
+                this.hud.Update(gameTime);
+                this.healthPackManager.Update(gameTime);
+            }
+
             base.Update(gameTime);
         }
 
