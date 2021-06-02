@@ -1,7 +1,7 @@
 # MyGame
 
 ## About
-A Mediocre Effort School Assignment.<br>
+A School Assignment.<br>
 Game build with the [Monogame Framework](https://www.monogame.net/).
 
 ## Concept
