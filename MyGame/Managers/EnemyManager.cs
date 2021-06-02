@@ -21,7 +21,7 @@ namespace MyGame
             this.enemyCap = 25;
             this.spawnDelay = 1000;
             this.movementSpeed = 80.0f;
-            this.fragsUntilBoss = 1;
+            this.fragsUntilBoss = 25;
         }
 
         public void Update(GameTime gameTime)
@@ -89,7 +89,7 @@ namespace MyGame
             if (gameTime.TotalGameTime.TotalMilliseconds > this.lastSpeedIncrement + 1000)
             {
                 this.movementSpeed += 5.0f;
-                this.enemyCap++;
+                this.enemyCap += 1;
                 if (this.spawnDelay > 0)
                     this.spawnDelay -= 5;
                 this.lastSpeedIncrement = gameTime.TotalGameTime.TotalMilliseconds;
