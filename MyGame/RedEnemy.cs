@@ -8,6 +8,7 @@ namespace MyGame
         public RedEnemy(GameRoot game, Vector2 position) : base(game, position)
         {
             this.texture = this.game.content.Load<Texture2D>("sprites/enemies/among-us-red");
+            this.healthPoints = 1.0f;
         }
 
         public override void Update(GameTime gameTime)

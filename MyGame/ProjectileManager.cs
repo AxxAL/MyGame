@@ -11,12 +11,14 @@ namespace MyGame
         private int castDelay;
         private double lastCast;
         private Player caster;
+        private EnemyManager enemyManager;
 
         public ProjectileManager(Player player, GameRoot game)
         {
             this.game = game;
             this.caster = player;
             this.castDelay = 500;
+            this.enemyManager = game.enemyManager;
         }
 
         public void Update(GameTime gameTime)
@@ -27,7 +29,7 @@ namespace MyGame
             }
             
             this.CastFirebolt(gameTime);
-            this.Hit();
+            this.CollisionChecker();
         }
 
         public void Draw()
@@ -53,39 +55,28 @@ namespace MyGame
             }
         }
 
-        private void Hit()
+        private void CollisionChecker()
         {
-            List<Projectile> newProjectileList = new List<Projectile>(this.game.player.projectileManager);
-            List<RedEnemy> newEnemyList = new List<RedEnemy>(this.game.enemyManager);
-            Boss boss = this.game.enemyManager.bossEnemy;
-            
-            foreach (var firebolt in this)
+            for (int i = 0; i < this.enemyManager.Count; i++)
             {
-                foreach (var enemy in this.game.enemyManager)
+                for (int j = 0; j < this.Count; j++)
                 {
-                    if (firebolt.hitbox.Intersects(enemy.hitbox))
+                    if (this[j].hitbox.Intersects(this.enemyManager[i].hitbox) && !GUtility.OfTypeBoss(this.enemyManager[i]))
                     {
-                        newEnemyList.Remove(enemy);
-                        newProjectileList.Remove(firebolt);
+                        this.enemyManager.Remove(this.enemyManager[i]);
+                        this.Remove(this[j]);
                         this.caster.frags++;
-                        this.game.enemyManager.fragsUntilBoss--;
+                        this.enemyManager.fragsUntilBoss--;
+                        break;
                     }
-                }
-
-                if (boss != null)
-                {
-                    if (firebolt.hitbox.Intersects(boss.hitbox))
+                    
+                    if (this[j].hitbox.Intersects(this.enemyManager[i].hitbox))
                     {
-                        newProjectileList.Remove(firebolt);
-                        boss.healthPoints -= 10;
+                        this.enemyManager[i].healthPoints -= 10;
+                        this.Remove(this[j]);
                     }
                 }
             }
-
-            this.game.player.projectileManager.Clear();
-            this.game.enemyManager.Clear();
-            this.game.player.projectileManager.AddRange(newProjectileList);
-            this.game.enemyManager.AddRange(newEnemyList);
         }
     }
 }

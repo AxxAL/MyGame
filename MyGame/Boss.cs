@@ -6,7 +6,6 @@ namespace MyGame
 {
     public class Boss : Enemy
     {
-        public int healthPoints;
         private int sizeMultiplier;
         private float movementSpeed;
         
@@ -14,7 +13,7 @@ namespace MyGame
         {
             this.texture = this.game.content.Load<Texture2D>("sprites/enemies/among-us-red");
             this.sizeMultiplier = 4;
-            this.healthPoints = 100;
+            this.healthPoints = 100.0f;
             this.movementSpeed = 80.0f;
         }
 

@@ -13,7 +13,7 @@ namespace MyGame
         public Texture2D currentTexture;
         public Vector2 position;
         public int frags;
-        public ProjectileManager projectileManager;
+        private ProjectileManager projectileManager;
         public Rectangle hitbox;
         private float speed;
         public float health;
@@ -71,14 +71,15 @@ namespace MyGame
             {
                 if (this.hitbox.Intersects(this.game.enemyManager[i].hitbox))
                 {
+                    if (GUtility.OfTypeBoss(this.game.enemyManager[i]))
+                    {
+                        this.health -= this.health;
+                        break;
+                    }
+                    
                     this.health--;
                     this.game.enemyManager.Remove(this.game.enemyManager[i]);
                 }
-            }
-
-            if (this.game.enemyManager.bossEnemy != null && this.hitbox.Intersects(this.game.enemyManager.bossEnemy.hitbox))
-            {
-                this.health = 0;
             }
         } // Loops through the enemy manager and checks if the player collides with an enemy.
 

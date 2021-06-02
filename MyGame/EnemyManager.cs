@@ -4,10 +4,9 @@ using Microsoft.Xna.Framework;
 
 namespace MyGame
 {
-    public class EnemyManager : List<RedEnemy>
+    public class EnemyManager : List<Enemy>
     {
         public float movementSpeed;
-        public Boss bossEnemy;
         public int fragsUntilBoss;
         private Random randUtil;
         private GameRoot game;
@@ -22,7 +21,7 @@ namespace MyGame
             this.enemyCap = 25;
             this.spawnDelay = 1000;
             this.movementSpeed = 80.0f;
-            this.fragsUntilBoss = 25;
+            this.fragsUntilBoss = 1;
         }
 
         public void Update(GameTime gameTime)
@@ -42,12 +41,15 @@ namespace MyGame
             
             for (int i = 0; i < this.Count; i++)
             {
+                if (GUtility.OfTypeBoss(this[i]))
+                {
+                    if (this[i].healthPoints <= 0)
+                    {
+                        this.Remove(this[i]);
+                    }
+                }
+                
                 this[i].Update(gameTime);
-            }
-
-            if (this.bossEnemy != null)
-            {
-                this.bossEnemy.Update(gameTime);
             }
 
             this.BossManager(gameTime);
@@ -61,11 +63,6 @@ namespace MyGame
             {
                 this[i].Draw();
             }
-
-            if (this.bossEnemy != null)
-            {
-                this.bossEnemy.Draw();
-            }
         }
         
         private void CreateEnemy(GameTime gameTime)
@@ -76,31 +73,13 @@ namespace MyGame
                 this.lastSpawned = gameTime.TotalGameTime.TotalMilliseconds;
             }
         }
-
-        private void SpawnBoss()
-        {
-            if (this.bossEnemy == null)
-            {
-                this.bossEnemy = new Boss(new Vector2(800, 400), this.game);
-            }
-        }
-
+        
         private void BossManager(GameTime gameTime)
         {
             if (this.fragsUntilBoss <= 0)
             {
-                this.SpawnBoss();
+                this.Add(new Boss(new Vector2(800, new Random().Next(0, 600)), this.game));
                 this.fragsUntilBoss = 25;
-            }
-
-            if (this.bossEnemy == null)
-            {
-                return;
-            }
-            
-            if (this.bossEnemy.healthPoints <= 0)
-            {
-                this.bossEnemy = null;
             }
         }
 
@@ -112,7 +91,7 @@ namespace MyGame
                 this.movementSpeed += 5.0f;
                 this.enemyCap++;
                 if (this.spawnDelay > 0)
-                    this.spawnDelay -= 10;
+                    this.spawnDelay -= 5;
                 this.lastSpeedIncrement = gameTime.TotalGameTime.TotalMilliseconds;
             }
         }

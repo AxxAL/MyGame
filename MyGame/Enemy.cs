@@ -9,6 +9,7 @@ namespace MyGame
         public Texture2D texture;
         public Vector2 position;
         public Rectangle hitbox;
+        public float healthPoints;
 
         protected Enemy(GameRoot game, Vector2 position)
         {

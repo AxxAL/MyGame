@@ -32,8 +32,8 @@ namespace MyGame
 
         protected override void Initialize()
         {
-            this.player = new Player(this);
             this.enemyManager = new EnemyManager(this);
+            this.player = new Player(this);
             this.hud = new HUD(this);
             this.healthPackManager = new HealthPackManager(this);
             this.menu = new Menu(this);
@@ -56,8 +56,8 @@ namespace MyGame
             if (!this.menu.isMenuActive)
             {
                 this.starManager.Update(gameTime);
-                this.player.Update(gameTime, keyboardState);
                 this.enemyManager.Update(gameTime);
+                this.player.Update(gameTime, keyboardState);
                 this.hud.Update(gameTime);
                 this.healthPackManager.Update(gameTime);
             }
@@ -95,8 +95,8 @@ namespace MyGame
         public void ResetGame()
         {
             this.menu.isMenuActive = true;
-            this.player = new Player(this);
             this.enemyManager = new EnemyManager(this);
+            this.player = new Player(this);
             this.hud = new HUD(this);
             MediaPlayer.Play(this.music);
         }
